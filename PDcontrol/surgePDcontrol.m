@@ -1,4 +1,4 @@
-  function del_r_dot =surgePDcontrol(Del_r)
+  function del_r_dot =surgePDcontrol(Del_r,psi,r)
 
 % MODELLING RUDDER DEFLECTION FOR TRACKING CONTROL USING PD CONTROLLER
 % Calling fn : forwarddynamics2 

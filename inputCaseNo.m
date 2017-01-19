@@ -41,25 +41,27 @@
 
 
 % Code for taking input from user
-  prompt = 'input case no(input 0 to quit):';
-  temp = input(prompt);
+  %prompt = 'input case no(input 0 to quit):';
+  %temp = input(prompt);
+  for iter = 5:8
+  temp = iter;
   caseNo=num2str(temp,'%0d') ;
-  prompt2 = 'euler(0) or rk4(1)?  : ';
-  sCheck = input(prompt2);
-  if sCheck==0
+  %prompt2 = 'euler(0) or rk4(1)?  : ';
+  %sCheck = input(prompt2);
+  %if sCheck==0
       Y=euler(caseNo,timespan,X);
-  end
-  if sCheck==1
-      Y=Runge_Kutta_solver(caseNo,timespan,X);
-  end
+  %end
+  %if sCheck==1
+  %    Y=Runge_Kutta_solver(caseNo,timespan,X);
+  %end
   %Y=Runge_Kutta_solver(caseNo,timespan,X);
 % Function for plotting
-  plotData(Y, timespan);
+  %plotData(Y, timespan);
 
 % Function for bot visualisation
   visualiseBot(timespan,Y,caseNo);
     
-
+  end
   end
  
   

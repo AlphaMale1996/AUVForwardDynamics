@@ -76,7 +76,7 @@ p = X(4);
 q = X(5);
 r = X(6);
 n=110.969;% propellor speed in RPS
-
+X(18) = n;
 % GLOBAL COORDINATES AND EULER ANGLE RATE TERMS
 syms pos_x pos_y pos_z phi theta si;
 pos_x = X(7);
@@ -124,7 +124,7 @@ drag_sim_ansys = -(30.4732*u*u+11.3196*u);
      surge_deriv(12)*u*r*Del_r) + (0.5*rho*(L^2))*(surge_deriv(12)*v*v + surge_deriv(13)*w*w + surge_deriv(14)*u*v*Del_r + ...
      u*w*(surge_deriv(15)*Del_s + surge_deriv(16)*Del_bs + surge_deriv(16)*Del_bp) + u*u*(surge_deriv(17)*Del_s^2 + surge_deriv(18)*Del_delb^2 ...
      + surge_deriv(19)*Del_r^2)) - ((W-B)*sin(theta)) + (0.5*rho*L^3)*(surge_deriv(20)*u*q*Del_s*epsilon) ...
-     + (0.5*rho*L^2)*(surge_deriv(21)*u*w*Del_sn + surge_deriv(22)*u*u*Del_s^2)*epsilon + (0.5*rho*L^2)*((u^2)*Xprop))+drag_sim_ansys;
+     + (0.5*rho*L^2)*(surge_deriv(21)*u*w*Del_s + surge_deriv(22)*u*u*Del_s^2)*epsilon + (0.5*rho*L^2)*((u^2)*Xprop))+drag_sim_ansys;
     
     (m*(-u*r + w*p - xg*p*q + yg*(p^2 + r^2) - zg*q*r) + (0.5*rho*L^4)*(sway_deriv(3)*p*q + sway_deriv(4)*q*r) + (0.5*rho*L^3)* ...
     (sway_deriv(6)*u*p + sway_deriv(7)*u*r + sway_deriv(8)*v*q + sway_deriv(9)*w*p + sway_deriv(10)*w*r) + (0.5*rho*L^2)*(sway_deriv(11)*u*v ...
@@ -190,6 +190,7 @@ del_st = ord_defl(2);
 del_bp = ord_defl(3);
 del_bs = ord_defl(4);
 
+global psi_des theta_des;
 switch caseNo    
 
     case {'1','2','3','4','5','6'}
@@ -199,7 +200,7 @@ switch caseNo
           dX(13) = sternDynamics(Del_s, del_st);
           
     case{'9'}
-        dX(16) = surgePDcontrol(Del_r);
+        dX(16) = surgePDcontrol(Del_r,psi_des-psi,r,theta_des-theta,q);
 end
 
 

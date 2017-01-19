@@ -1,0 +1,78 @@
+
+close all;
+clear all;
+addpath('utils');
+% mat file containing A and B matrices
+   global a b;
+   a=0; b=0;
+   heave_and_pitch_matrices;
+    global z;
+    z=0;
+  tspan = [0 3];
+
+X_initial = [20; 0; 0; 0];
+%F_ext = [ 0; 0; 0; 0];
+
+% storing the a and b values corresponding to -ve eigenvalues of B 
+%   a_b_valuesArray = check_eigen_B(A,B);
+%   fname2=['a_b_array_heavePitch','.csv'] ;
+%   fid2=fopen(fname2,'w');
+%   dlmwrite(fname2,a_b_valuesArray);
+%   fclose(fid2) ;
+%   [r,c] = size(a_b_valuesArray);
+  
+  
+  for i=1:1
+    % setting a and b 
+      a = 1.5;%a_b_valuesArray(90,1);
+      b = 1;%a_b_valuesArray(90,2);
+      
+    % Solving using ODE45
+    %  [T,y] = ode45( @heavePitchControl, tspan, X_initial);
+       
+    % Solving using 1st Order Euler
+    % X(k+1) = X(k) +dX(k)*dk
+      dt = .1;
+      T = 0:.1:50;
+      X_euler =X_initial;
+      y(1,:) = X_initial;
+      
+      for j=2:length(T)
+           DX=swayYawControl(T(j),X_euler);
+           temp=X_euler+DX*dt; 
+           X_euler=temp;
+           y(j,:) = X_euler;
+           z = z+ X_euler(1)*j;
+      end
+subplot(4,1,1);plot(T,y(:,1)); xlabel('time');ylabel('w');
+subplot(4,1,2);plot(T,y(:,2)); xlabel('time');ylabel('q');
+subplot(4,1,3);plot(T,y(:,3)); xlabel('time');ylabel('\delta_s');
+subplot(4,1,4);plot(T,y(:,4)); xlabel('time');ylabel('\theta');      
+disp(z);
+      
+      
+%        figure;
+%        plot(T,y(:,1));
+%        xlabel('t');
+%        ylabel('w');
+%        
+%        
+%        figure;
+%        plot(T,y(:,2));
+%        xlabel('t');
+%        ylabel('q');
+%        
+%        figure;
+%        plot(T,y(:,3));
+%        xlabel('t');
+%        ylabel('\delta_s');
+%        
+%        figure;
+%        plot(T,y(:,4));
+%        xlabel('t');
+%        ylabel('\theta');
+       
+  end
+ % close all;
+ %disp(eig(B/A));
+
